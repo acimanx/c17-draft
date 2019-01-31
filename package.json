@@ -33,7 +33,7 @@
         }
     },
     "lint-staged": {
-        "server/**/*js": [
+        "**/*js": [
             "eslint",
             "git add"
         ]
