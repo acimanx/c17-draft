@@ -26,10 +26,8 @@ app.use(function(err) {
     console.log(err.stack || err.message);
 });
 
-app.start = function() {
-    app.listen(app.get('port'), function() {
-        console.log(`app is running at ${app.get('baseUrl')}`);
-    });
+app.start = function(cb) {
+    app.listen(app.get('port'), typeof cb === 'function' && cb);
 };
 
 module.exports = app;
