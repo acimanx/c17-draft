@@ -9,7 +9,7 @@ const yellow = '\x1b[33m';
 
 const testSql = 'select 1+2 as result';
 
-db.query(testSql)
+db.queryPromise(testSql)
     .then(rows => {
         console.log(`\n${yellow}db is ok (1 + 2 == ${rows[0].result})${reset}`);
         app.start(() => {

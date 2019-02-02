@@ -14,6 +14,6 @@ if (process.env.DATABASE_URL) {
     });
 }
 
-db.query = util.promisify(db.query);
+db.queryPromise = util.promisify(db.query);
 
 module.exports = db;
