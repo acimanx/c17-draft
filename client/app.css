@@ -1,0 +1,87 @@
+body {
+    font: normal 16px Arial;
+    max-width: 600px;
+    margin: auto;
+}
+
+.nav {
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+.nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.nav li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.nav--link {
+    text-decoration: underline;
+    cursor: pointer;
+    color: blue;
+}
+
+.nav--link:hover {
+    text-decoration: none;
+}
+
+.nav--link.active {
+    text-decoration: none;
+}
+
+.houses--item {
+    padding: 10px 15px;
+    cursor: pointer;
+    margin: 0 -15px;
+}
+
+.houses--item:hover {
+    background: #f0f0f0;
+}
+
+.form {
+    position: relative;
+}
+
+.form--error {
+    color: red;
+}
+
+.form--loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.85);
+    text-align: center;
+    margin: auto;
+}
+
+.form input[type='text'],
+.form input[type='number'],
+.form textarea {
+    padding: 5px;
+    display: block;
+    border: 1px solid #aaa;
+    border-radius: 2px;
+    font-family: arial;
+}
+
+.form button {
+    padding: 5px 10px;
+}
+
+.form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form--row {
+    margin-bottom: 1em;
+}
