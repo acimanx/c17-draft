@@ -1,4 +1,7 @@
 const router = require('express').Router();
+const validator = require('validator');
+
+const db = require('../db');
 
 let lastId = 0;
 
@@ -51,6 +54,44 @@ router.post('/contribute', function(req, res) {
     fakeDb.push(item);
 
     return res.json(item);
+});
+
+router.use('/contribute_url', async (req, res) => {
+    const { url, email, frequency } = req.body;
+
+    if (typeof url !== 'string' || !validator.isURL(url)) {
+        return res.json({ error: 'url should be a valid url value' });
+    }
+
+    if (typeof email !== 'string') {
+        return res.json({ error: 'email should be a valid email value' });
+    }
+
+    if (
+        typeof frequency !== 'number' ||
+        Number.isNaN(frequency) ||
+        frequency <= 0
+    ) {
+        return res.json({ error: 'frequency should be a positive number' });
+    }
+
+    const sql = `
+        insert into contribute_url (
+            url,
+            email,
+            frequency,
+            created_at    
+        ) values (?);
+    `;
+    const data = [url, email, frequency, new Date()];
+
+    try {
+        await db.queryPromise(sql, [data]);
+        return res.end();
+    } catch (e) {
+        console.log(e);
+        return res.status(500).end();
+    }
 });
 
 router.use('*', function(req, res) {

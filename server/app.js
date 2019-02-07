@@ -1,8 +1,10 @@
 const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
+const cron = require('node-cron');
 
 const apiRouter = require('./api');
+const fetchData = require('./cron/fetchData');
 
 const app = express();
 
@@ -26,8 +28,13 @@ app.use(function(err) {
     console.log(err.stack || err.message);
 });
 
+function startCronJobs() {
+    cron.schedule('* * * * *', fetchData);
+}
+
 app.start = function(cb) {
     app.listen(app.get('port'), typeof cb === 'function' && cb);
+    startCronJobs();
 };
 
 module.exports = app;
