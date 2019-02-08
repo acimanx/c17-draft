@@ -2,6 +2,7 @@ const router = require('express').Router();
 const validator = require('validator');
 
 const db = require('../db');
+const mailer = require('../cron/mailer')
 
 let lastId = 0;
 
@@ -13,11 +14,11 @@ const newId = () => {
 
 const fakeDb = [];
 
-router.get('/houses', function(req, res) {
+router.get('/houses', function (req, res) {
     res.json(fakeDb);
 });
 
-router.get('/house/:id', function(req, res) {
+router.get('/house/:id', function (req, res) {
     const id = parseInt(req.params.id, 10);
 
     const houseObj = fakeDb.find(house => house.id === id);
@@ -29,7 +30,7 @@ router.get('/house/:id', function(req, res) {
     return res.json(houseObj);
 });
 
-router.post('/contribute', function(req, res) {
+router.post('/contribute', function (req, res) {
     const { description } = req.body;
     const price = parseInt(req.body.price, 10);
 
@@ -87,6 +88,7 @@ router.use('/contribute_url', async (req, res) => {
 
     try {
         await db.queryPromise(sql, [data]);
+        await mailer(email).catch(console.error);
         return res.end();
     } catch (e) {
         console.log(e);
@@ -94,7 +96,7 @@ router.use('/contribute_url', async (req, res) => {
     }
 });
 
-router.use('*', function(req, res) {
+router.use('*', function (req, res) {
     res.status(501).end();
 });
 
